@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MyLocation</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= yield :head %>
+  
+  <%= csrf_meta_tags %>
+  
+</head>
+<body>
+   <noscript>
+     <p>
+       <b>JavaScript must be enabled in order for you to use Google Maps.</b> 
+       However, it seems JavaScript is either disabled or not supported by your browser. To view Google Maps, enable JavaScript by changing your browser options, and then try again.
+     </p>  
+   </noscript>
+   
+   <nav id="nav">
+      <div id="user_nav">
+         <% if current_user %>
+            Welcome, <%= current_user.name %>!
+         <% else %>
+           <%= link_to "Sign in with Twitter", "/auth/twitter" %>
+         <% end %>
+      </div>
+   </nav>
+   <% if current_user %>
+   <%= yield %>
+   <% else %>
+      
+      <h2>You are not signed in</h2>
+   
+   <% end %>
+   
+</body>
+</html>

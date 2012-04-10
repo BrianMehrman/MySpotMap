@@ -1,0 +1,74 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Address:</b>
+  <%= @location.address %>
+</p>
+
+<p>
+  <b>Latitude:</b>
+  <%= @location.latitude %>
+</p>
+
+<p>
+  <b>Longitude:</b>
+  <%= @location.longitude %>
+</p>
+<% content_for :head do -%>
+ 
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD87boF5vWhx0ytlX92jp3v-Lph1RaTDIM&sensor=false"></script>
+  <script type="text/javascript">
+    var map;
+    var infowindow;
+    
+    function createMarkerFromPoint(point,html) {
+       
+       var marker = new google.maps.Marker({
+         map: map,
+         position: point
+       });
+
+       google.maps.event.addListener(marker, 'click', function() {
+         infowindow.setContent(html);
+         infowindow.open(map, this);
+       });
+     }
+    function createMarkerFromPlace(place) {
+     var placeLoc = place.geometry.location;
+     var marker = new google.maps.Marker({
+       map: map,
+       position: place.geometry.location
+     });
+
+     google.maps.event.addListener(marker, 'click', function() {
+       infowindow.setContent(place.name);
+       infowindow.open(map, this);
+     });
+   }
+
+    
+    function initialize() {
+      var myOptions = {
+        zoom: 8,
+        center: new google.maps.LatLng(<%= @location.latitude %>, <%= @location.longitude %>),
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      };
+      map = new google.maps.Map(document.getElementById('map_canvas'),
+                  myOptions);
+      infowindow = new google.maps.InfoWindow();
+
+      // add markers
+      var point = new google.maps.LatLng(<%= @location.latitude %>, <%= @location.longitude %>);
+      var marker = createMarkerFromPoint(point,'<div style="width:240px">Hello there<\/div>')
+    }
+
+    google.maps.event.addDomListener(window, 'load', initialize);
+  </script>
+<% end -%>
+<div id="map_canvas" >
+</div>
+
+
+
+<%= link_to 'Edit', edit_location_path(@location) %> |
+<%= link_to 'Back', locations_path %>
