@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  before_filter :require_user, :only =>[:index, :show, :edit]
+
   # GET /users
   # GET /users.json
   def index
@@ -44,6 +46,8 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
+        session[:user_id] = @user.id
+        #UserMailer.welcome_email(@user).deliver
         format.html { redirect_to @user, notice: 'User was successfully created.' }
         format.json { render json: @user, status: :created, location: @user }
       else

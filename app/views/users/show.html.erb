@@ -6,15 +6,9 @@
 </p>
 
 <p>
-  <b>Email:</b>
-  <%= @user.email %>
+  <b>Spots</b>
+  <%= @user.spots %>
 </p>
-
-<p>
-  <b>Password digest:</b>
-  <%= @user.password_digest %>
-</p>
-
 
 <%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Back', users_path %>

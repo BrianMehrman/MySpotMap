@@ -1,5 +1,9 @@
 MyLocation::Application.routes.draw do
 
+  get "pages/landing"
+
+  get "pages/404"
+
   match "auth/:provider/callback", to: "sessions#create"
 
   resources :users
